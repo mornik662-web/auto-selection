@@ -2968,6 +2968,22 @@ __webpack_require__.r(__webpack_exports__);
 window.$ = window.jQuery = jquery__WEBPACK_IMPORTED_MODULE_0__["default"];
 
 window.bootstrap = bootstrap__WEBPACK_IMPORTED_MODULE_1__;
+(0,jquery__WEBPACK_IMPORTED_MODULE_0__["default"])(function () {
+  // подтверждение удаления для всех форм с классом js-delete-form
+  (0,jquery__WEBPACK_IMPORTED_MODULE_0__["default"])('.js-delete-form').on('submit', function (e) {
+    if (!window.confirm('Удалить этот автомобиль?')) {
+      e.preventDefault();
+    }
+  });
+
+  // автоматически скрываем зелёное уведомление через 4 секунды
+  var $flash = (0,jquery__WEBPACK_IMPORTED_MODULE_0__["default"])('.js-flash');
+  if ($flash.length) {
+    setTimeout(function () {
+      $flash.fadeOut(400);
+    }, 4000);
+  }
+});
 
 /***/ }),
 

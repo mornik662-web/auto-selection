@@ -5,34 +5,34 @@
 @section('content')
   <h1 class="page-title">Карточки автомобилей</h1>
 
-  <div class="row g-4">
-    @foreach ($cars as $car)
-      <div class="col-md-6 col-lg-4">
-        <div class="card h-100 shadow-sm">
-          <div class="position-relative">
-            <img src="{{ $car->image_url }}" alt="{{ $car->name }}"
-                 class="card-img-top" style="height:200px;object-fit:cover">
-            <span class="badge bg-light text-dark position-absolute top-0 start-0 m-2">
-              {{ $car->body_type }}
-            </span>
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xxl-4 row-cols-xxxl-5 g-4 cards">
+    @forelse ($cars as $car)
+      <div class="col">
+        <article class="card h-100">
+          <div class="card__media">
+            <img class="card-img-top img-fluid card__image" src="{{ $car->image_url }}" alt="{{ $car->name }}">
+            <span class="card__type">{{ $car->body_type }}</span>
           </div>
-          <div class="card-body">
-            <h3 class="h5">
-              <a href="{{ route('cars.show', $car) }}" class="text-decoration-none">{{ $car->name }}</a>
-            </h3>
-            <p class="small text-muted mb-0">{{ Str::limit($car->description, 120) }}</p>
+          <div class="card-body d-flex flex-column">
+            <h3 class="card-title card__name">{{ $car->name }}</h3>
+            <p class="card__text">{{ $car->description }}</p>
+
+            <div class="mt-auto d-flex flex-wrap gap-2">
+              <a href="{{ route('cars.show', $car) }}" class="btn btn-outline-primary btn-sm">Подробнее</a>
+              <a href="{{ route('cars.edit', $car) }}" class="btn btn-outline-secondary btn-sm">Изменить</a>
+              <form method="POST" action="{{ route('cars.destroy', $car) }}" class="js-delete-form">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-outline-danger btn-sm">Удалить</button>
+              </form>
+            </div>
           </div>
-          <div class="card-footer d-flex gap-2">
-            <a href="{{ route('cars.edit', $car) }}" class="btn btn-sm btn-outline-primary">Изменить</a>
-            <form method="POST" action="{{ route('cars.destroy', $car) }}"
-                  onsubmit="return confirm('Удалить этот автомобиль?')">
-              @csrf
-              @method('DELETE')
-              <button class="btn btn-sm btn-outline-danger">Удалить</button>
-            </form>
-          </div>
-        </div>
+        </article>
       </div>
-    @endforeach
+    @empty
+      <div class="col-12">
+        <p class="text-body-secondary">Автомобилей пока нет. Нажмите «Добавить».</p>
+      </div>
+    @endforelse
   </div>
 @endsection

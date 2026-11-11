@@ -1,2 +1,237 @@
-   @import 'bootstrap/scss/bootstrap';
-   @import 'custom';
+@use "sass:color";
+
+// Палитра, брейкпоинты и переопределения переменных Bootstrap
+@import "variables";
+
+// Bootstrap из SASS-исходников
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
+// ---------- Миксины ----------
+@mixin flex-between($gap: 0) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  @if $gap > 0 {
+    gap: $gap;
+  }
+}
+
+@mixin card-color-theme($color) {
+  .card__type {
+    background-color: rgba($color, 0.18);
+    color: $color;
+  }
+
+  .card__name {
+    color: color.adjust($color, $lightness: $card-title-boost);
+  }
+}
+
+// ---------- Шапка (navbar) ----------
+.site-header {
+  background-color: $color-header-bg;
+  border-bottom: 1px solid $color-border;
+
+  .header__brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .header__logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 6px;
+    background-color: $color-accent;
+    color: #101215;
+    font-weight: 700;
+  }
+
+  .header__title {
+    font-size: 15px;
+    color: $color-text;
+  }
+}
+
+.btn-primary {
+  --bs-btn-color: #101215;
+  --bs-btn-hover-color: #101215;
+  --bs-btn-active-color: #101215;
+  font-weight: 600;
+}
+
+// ---------- Заголовок страницы ----------
+.page-title {
+  margin-top: 40px;
+  margin-bottom: 30px;
+  font-size: 26px;
+
+  // собственный брейкпоинт для широких экранов
+  @include media-breakpoint-up(xxxl) {
+    font-size: 32px;
+  }
+}
+
+// ---------- Карточки ----------
+.card {
+  --bs-card-bg: #{$color-card-bg};
+  --bs-card-border-color: #{$color-border};
+  --bs-card-border-radius: 10px;
+  --bs-card-inner-border-radius: 9px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+
+  &__media {
+    position: relative;
+
+    .card__type {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+    }
+  }
+
+  &__image {
+    display: block;
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  &__type {
+    display: inline-block;
+    background-color: $color-accent-light;
+    color: $color-accent;
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 4px;
+  }
+
+  &__name {
+    margin-top: 0;
+    margin-bottom: 8px;
+    font-size: 16px;
+  }
+
+  &__text {
+    margin: 0 0 16px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: $color-text-muted;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+// Цвета карточек: 5 оттенков с шагом по тону.
+// :nth-child(5n + i) повторяет оттенки для любого количества карточек.
+@for $i from 1 through $card-color-steps {
+  $step-color: color.adjust($card-base-color, $hue: ($i - 1) * $card-hue-step);
+
+  .cards > :nth-child(#{$card-color-steps}n + #{$i}) {
+    @include card-color-theme($step-color);
+  }
+}
+
+// ---------- Страница автомобиля (show) ----------
+.car-detail {
+  &__image {
+    display: block;
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid $color-border;
+  }
+
+  &__title {
+    margin-bottom: 16px;
+    font-size: 28px;
+    color: color.adjust($color-accent, $lightness: 12%);
+  }
+
+  &__text {
+    line-height: 1.6;
+    color: $color-text;
+  }
+}
+
+.spec-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 14px;
+
+  li {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 6px 0;
+    border-bottom: 1px solid $color-border;
+  }
+
+  li:last-child {
+    border-bottom: 0;
+  }
+
+  .spec-name {
+    color: $color-text-muted;
+  }
+
+  .spec-value {
+    text-align: right;
+  }
+}
+
+// ---------- Форма добавления / редактирования ----------
+.form-panel {
+  margin-bottom: 48px;
+  padding: 24px;
+  background-color: $color-card-bg;
+  border: 1px solid $color-border;
+  border-radius: 10px;
+}
+
+// ---------- Футер ----------
+.site-footer {
+  margin-top: 60px;
+  background-color: $color-footer-bg;
+  border-top: 1px solid $color-border;
+
+  .footer__inner {
+    @include flex-between;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .footer__author {
+    font-size: 13px;
+    color: $color-text-muted;
+  }
+
+  .footer__socials {
+    display: flex;
+    gap: 14px;
+  }
+}
+
+.social-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid $color-border;
+  color: $color-text-muted;
+  text-decoration: none;
+
+  &:hover {
+    color: $color-accent;
+    border-color: $color-accent;
+  }
+}

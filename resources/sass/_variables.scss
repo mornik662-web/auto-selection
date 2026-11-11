@@ -1,0 +1,45 @@
+// ---------- Палитра из ЛР №1 ----------
+$color-bg: #14161a;
+$color-header-bg: #1b1e23;
+$color-footer-bg: #17191d;
+$color-card-bg: #1e2126;
+$color-accent: #4fb3d9;
+$color-accent-light: #23414f;
+$color-text: #eef1f4;
+$color-text-muted: #9aa3ad;
+$color-border: #2b2f36;
+
+$card-base-color: $color-accent;
+$card-color-steps: 5;
+$card-hue-step: 40deg;
+$card-title-boost: 12%;
+
+// ---------- Брейкпоинты: 6 стандартных + собственный xxxl для широких экранов ----------
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px,
+  xxxl: 1500px
+);
+
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  xxl: 1320px,
+  xxxl: 1440px
+);
+
+// ---------- Переопределение переменных Bootstrap (тёмная тема) ----------
+$primary: $color-accent;
+$font-family-sans-serif: "Segoe UI", Arial, sans-serif;
+
+$body-bg-dark: $color-bg;
+$body-color-dark: $color-text;
+$body-secondary-color-dark: $color-text-muted;
+$border-color-dark: $color-border;
+$link-color-dark: $color-accent;
