@@ -6,8 +6,6 @@
         "prod": "mix --production"
     },
     "devDependencies": {
-        "axios": "^1.7.4",
-        "concurrently": "^9.0.1",
         "laravel-mix": "^6.0.49",
         "postcss": "^8.5.32",
         "resolve-url-loader": "^5.0.0",
