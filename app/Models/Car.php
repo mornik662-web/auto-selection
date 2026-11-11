@@ -43,7 +43,7 @@ class Car extends Model
         return Attribute::make(
             get: fn () => $this->image_path
                 ? asset('storage/' . $this->image_path)
-                : asset('images/placeholder.png'),
+                : asset('images/placeholder.svg'),
         );
     }
 }
